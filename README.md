@@ -13,6 +13,9 @@ Will not work in a headless environment.
 ## Usage
 `python gameoflife.py`
 
+To run an example:
+`python gameoflife.py --file examples/EXAMPLE.txt`
+
 Controls:
 * Run the simulation: space
 * Add cell: left click
