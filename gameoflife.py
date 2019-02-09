@@ -190,6 +190,10 @@ while True:
 			# Export
 			if event.key == pygame.K_e:
 				export(squares, scale, width, height)
+
+			# Next frame
+			if event.key == pygame.K_n:
+				squares = process(squares)
 			
 			# Quit
 			if event.key == pygame.K_ESCAPE:

@@ -19,6 +19,7 @@ Controls:
 * Remove cell: right click
 * Decrease simulation speed: left bracket "["
 * Increase simulation speed: right bracket "]"
+* Next frame (run simulation for one frame, when paused): N
 * Clear all cells: C
 * Randomize cells: R
 * Quick save: S
