@@ -36,3 +36,4 @@ Optional parameters are available on the command line:
 
 ## To Do
 * Add import/export functionality (save width, height, and scale parameters as well)
+* Add quicksave/load button so you can return to a saved state and run the same simulation
