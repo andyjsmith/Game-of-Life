@@ -19,11 +19,14 @@ Controls:
 * Remove cell: right click
 * Decrease simulation speed: left bracket "["
 * Increase simulation speed: right bracket "]"
-* Next frame (run simulation for one frame, when paused): N
+* Next frame: N
+  * Runs simulation for one frame, when paused
 * Clear all cells: C
 * Randomize cells: R
 * Quick save: S
 * Quick load: L
+* Export to file: E 
+  * Saves as `export.txt`, rename this or move it to prevent overwriting
 * Toggle gridlines: G
 * Quit: Q
 
