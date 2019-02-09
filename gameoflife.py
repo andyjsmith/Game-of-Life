@@ -91,6 +91,7 @@ black = 0, 0, 0
 white = 255, 255, 255
 yellow = 255, 255, 0
 gray = 200, 200, 200
+darkgray = 50, 50, 50
 
 # Number of cells in the x and y directions
 num_x = int(width / scale)
@@ -163,10 +164,20 @@ while True:
 		if frame % speed == 0:
 			squares = process(squares)
 
+	# Render text
 	if not hide_text:
 		font.render_to(screen, (5, 5), "Speed: 1/%d" % speed, black, white)
 		font.render_to(screen, (5, 25), "FPS: %.0f" % clock.get_fps(), black, white)
 		font.render_to(screen, (5, 45), "Playing" if simulate else "", black, white)
+
+	# Highlight selected cell
+	if not simulate:
+		i = int(mouse_pos[0] / scale)
+		j = int(mouse_pos[1] / scale)
+		if squares[i][j]:
+			draw.rect(screen, darkgray, rect(int(mouse_pos[0] / scale) * scale, int(mouse_pos[1] / scale) * scale, scale, scale))
+		else:
+			draw.rect(screen, gray, rect(int(mouse_pos[0] / scale) * scale, int(mouse_pos[1] / scale) * scale, scale, scale))
 	
 	# Limit to framerate
 	if unlimited_framerate:
