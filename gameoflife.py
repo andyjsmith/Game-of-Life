@@ -67,7 +67,6 @@ parser.add_argument("--width", type=int, help="width of screen (default: 1000)")
 parser.add_argument("--height", type=int, help="height of screen (default: 1000)")
 parser.add_argument("--framerate", type=int, help="maximum framerate (default: 60)")
 parser.add_argument("--unlimited_framerate", action="store_true", help="disable framerate limiting")
-parser.add_argument("--hide_text", action="store_true", help="hide all display text")
 args = parser.parse_args()
 
 scale = args.scale or 20
@@ -75,16 +74,13 @@ width = args.width or 1000
 height = args.height or 1000
 framerate = args.framerate or 60
 unlimited_framerate = args.unlimited_framerate
-hide_text = args.hide_text
 
 pygame.init()
+
+caption_init = "Conway's Game of Life - "
 pygame.display.set_caption("Conway's Game of Life")
 clock  = pygame.time.Clock()
 size = width, height
-
-# Load font
-pygame.freetype.init()
-font = pygame.freetype.Font("OpenSans-Regular.ttf", 16)
 
 black = 0, 0, 0
 white = 255, 255, 255
@@ -194,11 +190,9 @@ while True:
 		if frame % speed == 0:
 			squares = process(squares)
 
-	# Render text
-	if not hide_text:
-		font.render_to(screen, (5, 5), "Speed: 1/%d" % speed, black, white)
-		font.render_to(screen, (5, 25), "FPS: %.0f" % clock.get_fps(), black, white)
-		font.render_to(screen, (5, 45), "Playing" if simulate else "", black, white)
+	# Update title bar with game stats
+	caption = caption_init + "Speed: 1/%d, FPS: %.0f, %s" % (speed, clock.get_fps(), "Playing" if simulate else "Paused")
+	pygame.display.set_caption(caption)
 
 	# Highlight selected cell
 	if not simulate:

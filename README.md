@@ -34,7 +34,6 @@ Optional parameters are available on the command line:
 * Set the pixel height of the screen: `--height N`
 * Set the framerate limit: `--framerate N`
 * Remove the framerate limit `--unlimited_framerate`
-* Hide all display text: `--hide_text`
 
 ## To Do
 * Add import/export functionality (save width, height, and scale parameters as well)
