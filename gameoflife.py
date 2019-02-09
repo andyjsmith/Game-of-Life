@@ -73,8 +73,8 @@ def export(squares, scale, width, height):
 	
 	with open(filename, "a") as f:
 		f.write("%d|%d|%d\n" % (scale, width, height))
-		for j in range(len(squares)):
-			for i in range(len(squares[0])):
+		for j in range(len(squares[0])):
+			for i in range(len(squares)):
 				f.write("1" if squares[i][j] else "0")
 			f.write("\n")
 
