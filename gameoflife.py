@@ -60,7 +60,6 @@ def random_squares(spawn_rate):
 		for j in range(len(squares[0])):
 			squares[i][j] = not bool(random.randint(0, spawn_rate))
 
-
 # Parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--scale", type=int, help="amount of pixels to equal one cell; will impact performance (default: 20)")
@@ -97,10 +96,16 @@ darkgray = 50, 50, 50
 num_x = int(width / scale)
 num_y = int(height / scale)
 
+# Game state
 squares = [ [0] * num_y for _ in range(num_x)]
 
+# Squares for the quick save
+saved_squares = [ [0] * num_y for _ in range(num_x)]
+
+# Define the screen surface
 screen = pygame.display.set_mode(size)
 
+# Game variables
 simulate = False
 speed = 1
 frame = 0
@@ -115,30 +120,55 @@ while True:
 		if event.type == pygame.QUIT: sys.exit()
 		
 		if event.type == pygame.KEYDOWN:
+			# Play/pause
 			if event.key == pygame.K_SPACE:
 				simulate = not simulate
+			
+			# Decrease speed
 			if event.key == pygame.K_LEFTBRACKET:
 				speed = 2 * speed
+
+			# Increase speed
 			if event.key == pygame.K_RIGHTBRACKET:
 				if speed > 1:
 					speed = speed / 2
 				else:
 					speed = 1
+
+			# Clear squares
 			if event.key == pygame.K_c:
 				clear_squares()
+
+			# Random squares
 			if event.key == pygame.K_r:
 				random_squares(5)
+
+			# Toggle gridlines
 			if event.key == pygame.K_g:
 				gridlines = not gridlines
+			
+			# Quick save
+			if event.key == pygame.K_s:
+				saved_squares = copy.deepcopy(squares)
+
+			# Quick load
+			if event.key == pygame.K_l:
+				squares = copy.deepcopy(saved_squares)
+			
+			# Quit
 			if event.key == pygame.K_ESCAPE:
 				sys.exit()
 
-	# Add or remove cells with mouse clicks
+	# Get current mouse position
 	mouse_pos = pygame.mouse.get_pos()
+	
+	# Add cell when left clicked
 	if pygame.mouse.get_pressed()[0]:
 		i = int(mouse_pos[0] / scale)
 		j = int(mouse_pos[1] / scale)
 		squares[i][j] = True
+	
+	# Remove cell when right clicked
 	if pygame.mouse.get_pressed()[2]:
 		i = int(mouse_pos[0] / scale)
 		j = int(mouse_pos[1] / scale)
