@@ -31,8 +31,8 @@ Controls:
 Optional parameters are available on the command line:
 * Help and information about parameters: `-h, --help`
 * Set the scale, the amount of pixels to equal one cell; will impact performance: `--scale N`
-* Set the pixel width of the screen: `--width N`
-* Set the pixel height of the screen: `--height N`
+* Set the width and height based on the number of pixels: `--window WIDTHxHEIGHT`
+* Set the width and height based on the number of cells you want: `--size XCELLSxYCELLS`
 * Set the framerate limit: `--framerate N`
 * Remove the framerate limit `--unlimited_framerate`
 * Load an exported cell file: `--file FILE.txt`

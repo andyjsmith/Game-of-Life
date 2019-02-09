@@ -80,17 +80,17 @@ def export(squares, scale, width, height):
 
 # Parse arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--scale", type=int, help="amount of pixels to equal one cell; will impact performance (default: 20)")
-parser.add_argument("--width", type=int, help="width of screen (default: 1000)")
-parser.add_argument("--height", type=int, help="height of screen (default: 1000)")
+parser.add_argument("--scale", type=int, help="amount of pixels to equal one cell; will impact performance if set too low (default: 20)")
+parser.add_argument("--window", help="size of window based on number of pixels, using the format WxH, e.g. 500x1000 (default: 1000x1000)")
+parser.add_argument("--size", help="size of window based on number of cells, using the format XxY, e.g. 20x40 (auto-calculates width & height based on scale provided, or default)")
 parser.add_argument("--framerate", type=int, help="maximum framerate (default: 60)")
 parser.add_argument("--unlimited_framerate", action="store_true", help="disable framerate limiting")
 parser.add_argument("--file", help="load cells from file")
 args = parser.parse_args()
 
 scale = args.scale or 20
-width = args.width or 1000
-height = args.height or 1000
+width = 1000
+height = 1000
 framerate = args.framerate or 60
 unlimited_framerate = args.unlimited_framerate
 
@@ -100,6 +100,21 @@ caption_init = "Conway's Game of Life - "
 pygame.display.set_caption("Conway's Game of Life")
 clock  = pygame.time.Clock()
 
+# Set width and height based on specified size
+if args.window:
+	width = int(args.window.split("x")[0])
+	height = int(args.window.split("x")[1])
+
+# Verify width and height are divisible by the scale factor
+if width % scale or height % scale:
+	sys.exit("Width and/or height are not divisible by the scale factor")
+
+# Set width and height based on specified number of cells in x and y
+if args.size:
+	width = int(args.size.split("x")[0]) * scale
+	height = int(args.size.split("x")[1]) * scale
+
+# Process loading file parameters
 if args.file:
 	with open(args.file, "r") as f:
 		file_lines = f.readlines()
@@ -113,7 +128,6 @@ if args.file:
 
 black = 0, 0, 0
 white = 255, 255, 255
-yellow = 255, 255, 0
 gray = 200, 200, 200
 darkgray = 50, 50, 50
 
