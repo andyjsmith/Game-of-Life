@@ -19,10 +19,12 @@ Controls:
 * Remove cell: right click
 * Decrease simulation speed: left bracket "["
 * Increase simulation speed: right bracket "]"
-* Clear all cells: c
-* Randomize cells: r
-* Toggle gridlines: g
-* Quit: q
+* Clear all cells: C
+* Randomize cells: R
+* Quick save: S
+* Quick load: L
+* Toggle gridlines: G
+* Quit: Q
 
 ## Advanced Usage
 Optional parameters are available on the command line:
