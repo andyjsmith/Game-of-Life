@@ -1,6 +1,9 @@
 # Conway's Game of Life in Python
 This is an implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in Python using the Pygame library.
 
+
+![Preview](/preview.gif?raw=true)
+
 ## Requirements
 * Python 3
 * Pygame: `pip install pygame`
