@@ -6,6 +6,7 @@ import sys
 import random
 import copy
 import argparse
+import os
 
 # Get the number of living neighbors for a cell
 def neighbors(squares, i, j):
@@ -60,6 +61,23 @@ def random_squares(spawn_rate):
 		for j in range(len(squares[0])):
 			squares[i][j] = not bool(random.randint(0, spawn_rate))
 
+# Export cell array to file
+def export(squares, scale, width, height):
+	filename = "export.txt"
+	
+	# Delete save file if it already exists
+	try:
+		os.remove(filename)
+	except OSError:
+		pass
+	
+	with open(filename, "a") as f:
+		f.write("%d|%d|%d\n" % (scale, width, height))
+		for j in range(len(squares)):
+			for i in range(len(squares[0])):
+				f.write("1" if squares[i][j] else "0")
+			f.write("\n")
+
 # Parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--scale", type=int, help="amount of pixels to equal one cell; will impact performance (default: 20)")
@@ -67,6 +85,7 @@ parser.add_argument("--width", type=int, help="width of screen (default: 1000)")
 parser.add_argument("--height", type=int, help="height of screen (default: 1000)")
 parser.add_argument("--framerate", type=int, help="maximum framerate (default: 60)")
 parser.add_argument("--unlimited_framerate", action="store_true", help="disable framerate limiting")
+parser.add_argument("--file", help="load cells from file")
 args = parser.parse_args()
 
 scale = args.scale or 20
@@ -80,7 +99,17 @@ pygame.init()
 caption_init = "Conway's Game of Life - "
 pygame.display.set_caption("Conway's Game of Life")
 clock  = pygame.time.Clock()
-size = width, height
+
+if args.file:
+	with open(args.file, "r") as f:
+		file_lines = f.readlines()
+	
+	file_arguments = file_lines[0].split("|")
+	scale = int(file_arguments[0])
+	width = int(file_arguments[1])
+	height = int(file_arguments[2])
+
+	file_lines = file_lines[1:]
 
 black = 0, 0, 0
 white = 255, 255, 255
@@ -95,11 +124,18 @@ num_y = int(height / scale)
 # Game state
 squares = [ [0] * num_y for _ in range(num_x)]
 
+# Import cells if loading from file
+if args.file:
+	for i in range(len(file_lines)):
+		for j in range(len(file_lines[0])):
+			if file_lines[i][j] == "\n": continue
+			squares[j][i] = bool(int(file_lines[i][j]))
+
 # Squares for the quick save
 saved_squares = [ [0] * num_y for _ in range(num_x)]
 
 # Define the screen surface
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode((width, height))
 
 # Game variables
 simulate = False
@@ -150,6 +186,10 @@ while True:
 			# Quick load
 			if event.key == pygame.K_l:
 				squares = copy.deepcopy(saved_squares)
+
+			# Export
+			if event.key == pygame.K_e:
+				export(squares, scale, width, height)
 			
 			# Quit
 			if event.key == pygame.K_ESCAPE:

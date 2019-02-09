@@ -26,7 +26,7 @@ Controls:
 * Toggle gridlines: G
 * Quit: Q
 
-## Advanced Usage
+## Command-Line Parameters
 Optional parameters are available on the command line:
 * Help and information about parameters: `-h, --help`
 * Set the scale, the amount of pixels to equal one cell; will impact performance: `--scale N`
@@ -34,6 +34,4 @@ Optional parameters are available on the command line:
 * Set the pixel height of the screen: `--height N`
 * Set the framerate limit: `--framerate N`
 * Remove the framerate limit `--unlimited_framerate`
-
-## To Do
-* Add import/export functionality (save width, height, and scale parameters as well)
+* Load an exported cell file: `--file FILE.txt`
